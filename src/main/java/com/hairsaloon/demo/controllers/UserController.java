@@ -2,6 +2,7 @@ package com.hairsaloon.demo.controllers;
 
 import com.hairsaloon.demo.modals.User;
 import com.hairsaloon.demo.repository.userRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +16,9 @@ public class UserController {
     @Autowired
     public userRepository userRepo;
     @PostMapping("/api/create-user")
-    public User createUser(@RequestBody User user){
+    public User createUser(@RequestBody @Valid User user){
         System.out.println("till here it is working ");
+
         return  userRepo.save(user);
     }
 
