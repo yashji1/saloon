@@ -47,6 +47,7 @@ public class UserController {
         existingUser.setFullname(user.getFullname());
         existingUser.setPhoneNo(user.getPhoneNo());
         existingUser.setEmail(user.getEmail());
+        existingUser.setUsername(user.getUsername());
         existingUser.setRole(user.getRole());
         return userRepo.save(existingUser);
     }
