@@ -20,11 +20,14 @@ public class User {
     @Email(message = "Email is not valid")
     private String email;
 
+    @NotBlank(message = "Username is mandatory")
+    private String username;
+
     @NotBlank(message = "Password is mandatory")
     private String password;
 
     private String phoneNo;
-
+    @NotBlank(message = "role is mandatory")
     private String role;
 
     private LocalDateTime createdAt;
@@ -40,6 +43,7 @@ public class User {
     // This req while creating user.
     public User(String fullname,
                 String email,
+                String username,
                 String phoneNo,
                 String role,
                 String password,
@@ -47,6 +51,7 @@ public class User {
                 LocalDateTime updatedAt) {
         this.fullname = fullname;
         this.email = email;
+        this.username=username;
         this.password=password;
         this.phoneNo = phoneNo;
         this.role = role;
@@ -78,6 +83,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
