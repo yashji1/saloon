@@ -4,6 +4,8 @@ import com.hairsaloon.demo.modals.User;
 import com.hairsaloon.demo.repository.userRepository;
 import com.hairsaloon.demo.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +13,12 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+
 public class UserServiceImpl implements UserService {
 
     private final userRepository userRepo;
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public User createUser(User user) {
@@ -29,8 +34,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long id) throws Exception {
         Optional<User> op = userRepo.findById(id);
-        if(op.isPresent())
+        if(op.isPresent()) {
+
             return op.get();
+        }
         throw  new Exception("USER NOT FOUND");
     }
 
@@ -53,6 +60,15 @@ public class UserServiceImpl implements UserService {
 
         User existingUser =  usr.get();
 
+        System.out.println(existingUser.getFullname());
+        System.out.println("workin");
+        String hashedPassword=existingUser.getPassword();
+
+        if(!existingUser.getPassword().isEmpty()){
+            hashedPassword = passwordEncoder.encode(existingUser.getPassword());
+        }
+        existingUser.setPassword(hashedPassword);
+        System.out.println(hashedPassword);
         existingUser.setFullname(user.getFullname());
         existingUser.setPhoneNo(user.getPhoneNo());
         existingUser.setEmail(user.getEmail());
