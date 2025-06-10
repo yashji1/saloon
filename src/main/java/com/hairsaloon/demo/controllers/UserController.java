@@ -28,6 +28,15 @@ public class UserController {
         return  new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
+    @PostMapping("/api/login")
+    public ResponseEntity<User> login(@RequestBody  User user){
+        int flag = userServ.login(user);
+
+        System.out.println("Login ->" + flag);
+        System.out.println("Logged In Successfully");
+        return new ResponseEntity<>(user,HttpStatus.OK);
+    }
+
     @GetMapping("/api/user")
     public ResponseEntity<List<User>> getUser(){
         System.out.println("Working...");

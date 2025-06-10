@@ -4,7 +4,9 @@ import com.hairsaloon.demo.modals.User;
 import com.hairsaloon.demo.repository.userRepository;
 import com.hairsaloon.demo.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +41,20 @@ public class UserServiceImpl implements UserService {
             return op.get();
         }
         throw  new Exception("USER NOT FOUND");
+    }
+
+    @Override
+    public int login(@NotNull User user)  {
+        Optional<User> op = userRepo.findByUsername(user.getUsername());
+        System.out.println("User found");
+        User usr = op.get();
+        System.out.println("User "+ usr);
+        System.out.println("User "+ user.getPassword());
+        System.out.println("User "+ usr.getPassword());
+        if(user.getPassword().equals(usr.getPassword())){
+            return 1;
+        }
+        return 0;
     }
 
     @Override
